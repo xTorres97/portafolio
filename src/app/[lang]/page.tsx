@@ -1,13 +1,14 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Code2, Mail } from "lucide-react";
-import { DICTS, EMAIL, GITHUB, isLocale, type Project } from "@/content";
+import { ArrowUpRight, Code2, Mail, MessageCircle } from "lucide-react";
+import { DICTS, EMAIL, GITHUB, isLocale, whatsappLink, type Project } from "@/content";
 import { CopyEmail } from "@/components/copy-email";
 import { Gallery } from "@/components/gallery";
 import { ScrollTint } from "@/components/scroll-tint";
 import { CountUp } from "@/components/count-up";
 import { Spotlight } from "@/components/spotlight";
+import { Assistant } from "@/components/assistant";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -16,6 +17,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const other = lang === "es" ? "en" : "es";
 
   const words = t.hero.title.split(" ");
+  const wa = whatsappLink(t.contact.whatsappMessage);
   const afterTitle = (i: number) => ({ animationDelay: `${words.length * 70 + 150 + i * 90}ms` });
 
   return (
@@ -56,7 +58,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <p className="after-title mt-7 max-w-2xl text-lg leading-relaxed text-muted md:text-xl" style={afterTitle(0)}>{t.hero.lead}</p>
           <div className="after-title mt-9 flex flex-wrap items-center gap-3" style={afterTitle(1)}>
             <a href="#proyectos" className="inline-flex h-12 items-center rounded-full bg-ink px-6 font-semibold text-white hover:bg-ink/85">{t.hero.ctaWork}</a>
-            <a href="#contacto" className="inline-flex h-12 items-center rounded-full px-6 font-semibold ring-1 ring-line hover:ring-ink/40">{t.hero.ctaContact}</a>
+            <a href={wa} target="_blank" rel="noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full px-6 font-semibold ring-1 ring-line hover:ring-ink/40">
+              <MessageCircle className="size-4 text-emerald-600" aria-hidden />{t.contact.whatsapp}
+            </a>
             <span className="ml-1 text-sm text-muted">{t.hero.location}</span>
           </div>
 
@@ -159,6 +163,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               {EMAIL}
             </a>
             <div className="mt-8 flex flex-wrap gap-3">
+              <a href={wa} target="_blank" rel="noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full bg-emerald-500 px-6 font-semibold text-white hover:bg-emerald-400"><MessageCircle className="size-4" />{t.contact.whatsapp}</a>
               <a href={`mailto:${EMAIL}`} className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 font-semibold text-ink hover:bg-white/90"><Mail className="size-4" />{t.contact.write}</a>
               <CopyEmail email={EMAIL} label={t.contact.copy} done={t.contact.copied} />
               <a href={GITHUB} target="_blank" rel="noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full border border-white/25 px-6 font-semibold hover:border-white/60"><Code2 className="size-4" />GitHub</a>
@@ -167,7 +172,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </section>
       </main>
 
-      <footer className="mx-auto mt-12 flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 pb-10 text-sm text-muted">
+      <Assistant lang={lang} />
+
+      <footer className="mx-auto mt-12 flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 pb-24 text-sm text-muted">
         <span>{t.footer}</span>
         <Link href={`/${other}`} hrefLang={other} className="hover:text-ink">{lang === "es" ? "English version" : "Versión en español"}</Link>
       </footer>

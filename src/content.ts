@@ -3,6 +3,8 @@ export type Locale = (typeof LOCALES)[number];
 
 export const EMAIL = "jsetorres1997@gmail.com";
 export const GITHUB = "https://github.com/xTorres97";
+export const WHATSAPP_NUMBER = "584120473374";
+export const whatsappLink = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 
 export type Project = {
   slug: string;
@@ -30,7 +32,11 @@ type Dict = {
   services: { title: string; items: { title: string; text: string }[] };
   process: { title: string; steps: { title: string; text: string }[] };
   stack: { title: string; groups: { label: string; items: string[] }[] };
-  contact: { title: string; text: string; copy: string; copied: string; write: string };
+  contact: { title: string; text: string; copy: string; copied: string; write: string; whatsapp: string; whatsappMessage: string };
+  assistant: {
+    open: string; title: string; subtitle: string; placeholder: string; send: string; close: string;
+    suggestions: string[]; thinking: string; error: string; limit: string; disclaimer: string; talkToMe: string;
+  };
   footer: string;
   projects: Project[];
 };
@@ -111,6 +117,22 @@ const es: Dict = {
     copy: "Copiar email",
     copied: "Email copiado",
     write: "Escribir un email",
+    whatsapp: "WhatsApp",
+    whatsappMessage: "Hola Jose, vi tu portafolio y me gustaría hablar sobre un proyecto.",
+  },
+  assistant: {
+    open: "Pregúntale a mi portafolio",
+    title: "Asistente del portafolio",
+    subtitle: "Responde con información de mis proyectos y servicios. Funciona con IA (Gemini).",
+    placeholder: "Escribe tu pregunta…",
+    send: "Enviar",
+    close: "Cerrar",
+    suggestions: ["¿Qué servicios ofreces?", "¿Cómo integras IA en un producto?", "Cuéntame sobre la tienda", "¿Cómo trabajas con un cliente?"],
+    thinking: "Pensando…",
+    error: "No pude responder ahora. Escríbeme directamente por WhatsApp o email.",
+    limit: "Llegaste al límite de preguntas de esta conversación. Si quieres seguir, escríbeme directamente.",
+    disclaimer: "Las respuestas las genera una IA y pueden tener errores.",
+    talkToMe: "Hablar con Jose",
   },
   footer: "Diseñado y programado por mí, Jose Torres.",
   projects: [
@@ -268,6 +290,22 @@ const en: Dict = {
     copy: "Copy email",
     copied: "Email copied",
     write: "Send an email",
+    whatsapp: "WhatsApp",
+    whatsappMessage: "Hi Jose, I saw your portfolio and I'd like to talk about a project.",
+  },
+  assistant: {
+    open: "Ask my portfolio",
+    title: "Portfolio assistant",
+    subtitle: "Answers using information about my projects and services. Powered by AI (Gemini).",
+    placeholder: "Type your question…",
+    send: "Send",
+    close: "Close",
+    suggestions: ["What services do you offer?", "How do you add AI to a product?", "Tell me about the store", "How do you work with clients?"],
+    thinking: "Thinking…",
+    error: "I couldn't answer right now. Reach me directly on WhatsApp or by email.",
+    limit: "You've reached the question limit for this chat. To keep going, contact me directly.",
+    disclaimer: "Answers are AI-generated and may contain mistakes.",
+    talkToMe: "Talk to Jose",
   },
   footer: "Designed and built by me, Jose Torres.",
   projects: [

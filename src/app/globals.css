@@ -83,3 +83,5 @@ body { background: var(--page-bg, var(--paper)); transition: background-color .8
   .read-progress { display: none; }
   .spotlight::before { display: none; }
 }
+
+@keyframes assistant-in { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
