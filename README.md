@@ -2,6 +2,8 @@
 
 Sitio personal bilingüe (español / inglés) con tres proyectos que se pueden probar en vivo.
 
+🔗 **[xtorres-dev.vercel.app](https://xtorres-dev.vercel.app)**
+
 - **[PsyDesk](https://github.com/xTorres97/psydesk):** plataforma de gestión clínica para psicólogos.
 - **[Sombra de Bucare](https://github.com/xTorres97/tienda-cafe):** tienda online con pagos, inventario y panel.
 - **[Calendario](https://github.com/xTorres97/calendario):** aplicación interactiva con arrastrar y soltar.
