@@ -23,8 +23,9 @@ export type Project = {
 
 type Dict = {
   meta: { title: string; description: string };
-  nav: { work: string; services: string; process: string; contact: string };
+  nav: { about: string; work: string; services: string; process: string; contact: string };
   hero: { available: string; title: string; lead: string; ctaWork: string; ctaContact: string; location: string };
+  about: { title: string; paragraphs: string[]; facts: { value: string; label: string }[] };
   work: { title: string; intro: string; problem: string; built: string; detail: string; demo: string; code: string; stack: string };
   services: { title: string; items: { title: string; text: string }[] };
   process: { title: string; steps: { title: string; text: string }[] };
@@ -43,16 +44,29 @@ const COLORS = {
 const es: Dict = {
   meta: {
     title: "Jose Torres · Desarrollador web full-stack",
-    description: "Desarrollador web full-stack y diseñador freelance en Venezuela. Aplicaciones web completas con Next.js, TypeScript y Postgres: de la interfaz a la base de datos.",
+    description: "Desarrollador web full-stack y diseñador freelance con 4 años de experiencia. Aplicaciones web completas con Next.js, TypeScript, Postgres e inteligencia artificial.",
   },
-  nav: { work: "Proyectos", services: "Servicios", process: "Cómo trabajo", contact: "Contacto" },
+  nav: { about: "Sobre mí", work: "Proyectos", services: "Servicios", process: "Cómo trabajo", contact: "Contacto" },
   hero: {
     available: "Disponible para proyectos freelance",
     title: "Diseño y construyo aplicaciones web completas.",
-    lead: "Soy Jose Torres, desarrollador full-stack y diseñador. Me encargo de todo el producto: la interfaz que usa tu cliente, la lógica que la sostiene y la base de datos detrás. Abajo hay tres proyectos que puedes probar ahora mismo.",
+    lead: "Hola, soy Jose. Llevo 4 años creando productos web de principio a fin: lo que ve tu cliente, la lógica que lo hace funcionar y, cada vez más, la inteligencia artificial que lo vuelve útil. Abajo tienes tres proyectos míos que puedes probar ahora mismo.",
     ctaWork: "Ver proyectos",
     ctaContact: "Escríbeme",
     location: "Venezuela · trabajo en remoto",
+  },
+  about: {
+    title: "Sobre mí",
+    paragraphs: [
+      "Soy desarrollador full-stack y diseñador. Trabajo de forma independiente desde Venezuela, con clientes que necesitan algo más que una página bonita: herramientas que su equipo use todos los días y que no se rompan.",
+      "Me gusta entender el negocio antes de escribir código. Diseño la interfaz, construyo el backend y me ocupo de lo que casi nadie ve: la seguridad de los datos, las pruebas y que todo cargue rápido.",
+      "Uso la inteligencia artificial en dos frentes: la integro en los productos, con asistentes que responden con los datos reales de cada negocio, y la uso en mi forma de trabajar para entregar más rápido sin bajar la calidad.",
+    ],
+    facts: [
+      { value: "4 años", label: "construyendo productos web" },
+      { value: "De punta a punta", label: "diseño, frontend, backend y datos" },
+      { value: "IA aplicada", label: "asistentes conectados a tus datos" },
+    ],
   },
   work: {
     title: "Proyectos",
@@ -68,9 +82,9 @@ const es: Dict = {
     title: "En qué te puedo ayudar",
     items: [
       { title: "Aplicaciones web a medida", text: "Paneles de gestión, sistemas de citas, plataformas internas. Con usuarios, permisos y los datos bien protegidos." },
-      { title: "Tiendas online", text: "Catálogo, carrito, pagos e inventario, con un panel para que gestiones pedidos sin depender de nadie." },
-      { title: "Sitios para negocios", text: "Páginas rápidas, bien posicionadas en Google y con un diseño propio, no una plantilla más." },
-      { title: "Mejorar lo que ya tienes", text: "Revisión de seguridad, rendimiento y errores en apps existentes. Encuentro el problema y lo arreglo." },
+      { title: "Tiendas y sitios para negocios", text: "Tiendas con pagos e inventario, o sitios rápidos y bien posicionados en Google. Siempre con un diseño propio, no una plantilla más." },
+      { title: "Inteligencia artificial en tu producto", text: "Asistentes que responden con la información real de tu negocio, resúmenes automáticos, clasificación de textos y tareas repetitivas que dejan de hacerse a mano." },
+      { title: "Mejorar lo que ya tienes", text: "Reviso apps existentes en seguridad, rendimiento y errores. Encuentro el problema, te explico qué pasa y lo arreglo." },
     ],
   },
   process: {
@@ -87,17 +101,18 @@ const es: Dict = {
     groups: [
       { label: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui"] },
       { label: "Backend y datos", items: ["Supabase", "Postgres", "Neon", "Drizzle ORM", "Zod"] },
+      { label: "Inteligencia artificial", items: ["Gemini API", "Claude API", "Asistentes con datos propios", "Automatización"] },
       { label: "Producción", items: ["Vercel", "Playwright", "Vitest", "GitHub"] },
     ],
   },
   contact: {
-    title: "¿Tienes un proyecto en mente?",
-    text: "Cuéntame qué necesitas y te respondo con una propuesta concreta.",
+    title: "¿Hablamos de tu proyecto?",
+    text: "Cuéntame qué tienes en mente, aunque todavía sea solo una idea. Te respondo personalmente con preguntas concretas y una propuesta clara.",
     copy: "Copiar email",
     copied: "Email copiado",
     write: "Escribir un email",
   },
-  footer: "Diseñado y programado por Jose Torres.",
+  footer: "Diseñado y programado por mí, Jose Torres.",
   projects: [
     {
       slug: "psydesk",
@@ -186,16 +201,29 @@ const es: Dict = {
 const en: Dict = {
   meta: {
     title: "Jose Torres · Full-stack web developer",
-    description: "Freelance full-stack web developer and designer based in Venezuela. Complete web applications with Next.js, TypeScript and Postgres, from the interface to the database.",
+    description: "Freelance full-stack web developer and designer with 4 years of experience. Complete web applications with Next.js, TypeScript, Postgres and AI.",
   },
-  nav: { work: "Work", services: "Services", process: "Process", contact: "Contact" },
+  nav: { about: "About", work: "Work", services: "Services", process: "Process", contact: "Contact" },
   hero: {
     available: "Available for freelance work",
     title: "I design and build complete web applications.",
-    lead: "I'm Jose Torres, a full-stack developer and designer. I take care of the whole product: the interface your customers use, the logic behind it and the database underneath. Below are three projects you can try right now.",
+    lead: "Hi, I'm Jose. For 4 years I've been building web products end to end: what your customers see, the logic that makes it work and, more and more, the AI that makes it genuinely useful. Below are three of my projects you can try right now.",
     ctaWork: "See my work",
     ctaContact: "Get in touch",
     location: "Venezuela · working remotely",
+  },
+  about: {
+    title: "About me",
+    paragraphs: [
+      "I'm a full-stack developer and designer working independently from Venezuela, with clients who need more than a pretty page: tools their team uses every day and that don't break.",
+      "I like to understand the business before writing code. I design the interface, build the backend and take care of what almost nobody sees: data security, tests and fast load times.",
+      "I work with AI on two fronts: I build it into products, with assistants that answer using each business's real data, and I use it in my own workflow to ship faster without lowering the bar.",
+    ],
+    facts: [
+      { value: "4 years", label: "building web products" },
+      { value: "End to end", label: "design, frontend, backend and data" },
+      { value: "Applied AI", label: "assistants connected to your data" },
+    ],
   },
   work: {
     title: "Work",
@@ -211,9 +239,9 @@ const en: Dict = {
     title: "How I can help",
     items: [
       { title: "Custom web apps", text: "Dashboards, booking systems, internal tools. With users, permissions and properly protected data." },
-      { title: "Online stores", text: "Catalog, cart, payments and inventory, plus an admin panel so you can run orders yourself." },
-      { title: "Business websites", text: "Fast pages that rank well on Google, with a design of their own instead of another template." },
-      { title: "Improving what you have", text: "Security, performance and bug reviews for existing apps. I find the problem and fix it." },
+      { title: "Stores and business websites", text: "Stores with payments and inventory, or fast sites that rank well on Google. Always with a design of their own, never another template." },
+      { title: "AI in your product", text: "Assistants that answer with your business's real information, automatic summaries, text classification and repetitive tasks that stop being done by hand." },
+      { title: "Improving what you have", text: "I review existing apps for security, performance and bugs. I find the problem, explain what's going on and fix it." },
     ],
   },
   process: {
@@ -230,17 +258,18 @@ const en: Dict = {
     groups: [
       { label: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui"] },
       { label: "Backend & data", items: ["Supabase", "Postgres", "Neon", "Drizzle ORM", "Zod"] },
+      { label: "AI", items: ["Gemini API", "Claude API", "Assistants on your data", "Automation"] },
       { label: "Shipping", items: ["Vercel", "Playwright", "Vitest", "GitHub"] },
     ],
   },
   contact: {
-    title: "Have a project in mind?",
-    text: "Tell me what you need and I'll reply with a concrete proposal.",
+    title: "Shall we talk about your project?",
+    text: "Tell me what you have in mind, even if it's just an idea for now. I'll reply personally with specific questions and a clear proposal.",
     copy: "Copy email",
     copied: "Email copied",
     write: "Send an email",
   },
-  footer: "Designed and built by Jose Torres.",
+  footer: "Designed and built by me, Jose Torres.",
   projects: [
     {
       slug: "psydesk",

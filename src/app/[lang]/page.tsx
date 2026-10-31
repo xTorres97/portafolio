@@ -21,7 +21,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5">
           <Link href={`/${lang}`} className="text-[17px] font-bold tracking-tight">Jose Torres</Link>
           <nav aria-label="Principal" className="ml-auto hidden gap-1 text-[15px] md:flex">
-            {([["#proyectos", t.nav.work], ["#servicios", t.nav.services], ["#proceso", t.nav.process], ["#contacto", t.nav.contact]] as const).map(([h, l]) => (
+            {([["#sobre-mi", t.nav.about], ["#proyectos", t.nav.work], ["#servicios", t.nav.services], ["#contacto", t.nav.contact]] as const).map(([h, l]) => (
               <a key={h} href={h} className="rounded-full px-3.5 py-2 text-muted hover:bg-black/5 hover:text-ink">{l}</a>
             ))}
           </nav>
@@ -66,6 +66,26 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </ol>
         </section>
 
+        {/* Sobre mí */}
+        <section id="sobre-mi" aria-labelledby="about-title" className="mx-auto max-w-6xl scroll-mt-16 px-5 pb-24">
+          <div className="grid gap-10 border-t border-ink/15 pt-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+            <div>
+              <h2 id="about-title" className="text-4xl font-bold tracking-tight md:text-5xl">{t.about.title}</h2>
+              <dl className="mt-8 space-y-5">
+                {t.about.facts.map(f => (
+                  <div key={f.label} className="flex flex-col">
+                    <dt className="order-2 text-[15px] text-muted">{f.label}</dt>
+                    <dd className="order-1 text-2xl font-bold tracking-tight">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="space-y-5 text-lg leading-relaxed md:text-xl md:leading-relaxed">
+              {t.about.paragraphs.map(p => <p key={p.slice(0, 20)}>{p}</p>)}
+            </div>
+          </div>
+        </section>
+
         {/* Proyectos */}
         <section id="proyectos" aria-labelledby="work-title" className="scroll-mt-16">
           <div className="mx-auto max-w-6xl px-5 pb-10">
@@ -105,7 +125,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         {/* Herramientas */}
         <section className="mx-auto max-w-6xl px-5 pt-24" aria-labelledby="stack-title">
           <h2 id="stack-title" className="text-2xl font-bold tracking-tight">{t.stack.title}</h2>
-          <dl className="mt-6 grid gap-6 sm:grid-cols-3">
+          <dl className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {t.stack.groups.map(g => (
               <div key={g.label}>
                 <dt className="text-sm text-muted">{g.label}</dt>
