@@ -1,9 +1,13 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Code2, Mail } from "lucide-react";
 import { DICTS, EMAIL, GITHUB, isLocale, type Project } from "@/content";
 import { CopyEmail } from "@/components/copy-email";
 import { Gallery } from "@/components/gallery";
+import { ScrollTint } from "@/components/scroll-tint";
+import { CountUp } from "@/components/count-up";
+import { Spotlight } from "@/components/spotlight";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -11,13 +15,18 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const t = DICTS[lang];
   const other = lang === "es" ? "en" : "es";
 
+  const words = t.hero.title.split(" ");
+  const afterTitle = (i: number) => ({ animationDelay: `${words.length * 70 + 150 + i * 90}ms` });
+
   return (
     <>
+      <ScrollTint />
       <a href="#proyectos" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white">
         {t.hero.ctaWork}
       </a>
 
-      <header className="sticky top-0 z-30 border-b border-line/70 bg-paper/85 backdrop-blur">
+      <header className="page-tint-header sticky top-0 z-30 border-b border-black/[.06] backdrop-blur">
+        <div className="read-progress pointer-events-none absolute inset-x-0 -bottom-px h-0.5 bg-ink/60" aria-hidden />
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5">
           <Link href={`/${lang}`} className="text-[17px] font-bold tracking-tight">Jose Torres</Link>
           <nav aria-label="Principal" className="ml-auto hidden gap-1 text-[15px] md:flex">
@@ -39,11 +48,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <span className="relative flex size-2"><span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" /><span className="relative inline-flex size-2 rounded-full bg-emerald-500" /></span>
             {t.hero.available}
           </p>
-          <h1 className="mt-7 max-w-4xl text-[clamp(2.6rem,7vw,5.6rem)] font-bold leading-[0.98] tracking-[-0.035em] animate-[rise_.6s_ease-out_both]">
-            {t.hero.title}
+          <h1 className="mt-7 max-w-4xl text-[clamp(2.6rem,7vw,5.6rem)] font-bold leading-[0.98] tracking-[-0.035em]" aria-label={t.hero.title}>
+            {words.map((w, i) => (
+              <Fragment key={i}><span aria-hidden className="word" style={{ animationDelay: `${i * 70}ms` }}>{w}</span>{" "}</Fragment>
+            ))}
           </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">{t.hero.lead}</p>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <p className="after-title mt-7 max-w-2xl text-lg leading-relaxed text-muted md:text-xl" style={afterTitle(0)}>{t.hero.lead}</p>
+          <div className="after-title mt-9 flex flex-wrap items-center gap-3" style={afterTitle(1)}>
             <a href="#proyectos" className="inline-flex h-12 items-center rounded-full bg-ink px-6 font-semibold text-white hover:bg-ink/85">{t.hero.ctaWork}</a>
             <a href="#contacto" className="inline-flex h-12 items-center rounded-full px-6 font-semibold ring-1 ring-line hover:ring-ink/40">{t.hero.ctaContact}</a>
             <span className="ml-1 text-sm text-muted">{t.hero.location}</span>
@@ -51,10 +62,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
           {/* Índice de proyectos: cada uno con su color */}
           <ol className="mt-16 grid gap-3 sm:grid-cols-3" aria-label={t.work.title}>
-            {t.projects.map(p => (
-              <li key={p.slug}>
-                <a href={`#${p.slug}`} className="group flex h-full flex-col justify-between rounded-2xl p-5 transition-transform hover:-translate-y-1"
+            {t.projects.map((p, i) => (
+              <li key={p.slug} className="after-title" style={afterTitle(2 + i)}>
+                <a href={`#${p.slug}`} className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl p-5 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(0,0,0,.45)]"
                   style={{ background: p.color.base, color: "#fff" }}>
+                  {/* Brillo que cruza la tarjeta al pasar el mouse */}
+                  <span aria-hidden className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[300%]" />
                   <span className="text-sm opacity-80">{p.kind}</span>
                   <span className="mt-10 flex items-end justify-between gap-2">
                     <span className="text-2xl font-bold tracking-tight">{p.name}</span>
@@ -113,7 +126,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl">{t.process.title}</h2>
           <ol className="mt-10 grid gap-4 md:grid-cols-4">
             {t.process.steps.map((s, i) => (
-              <li key={s.title} className="rounded-2xl bg-surface p-6 ring-1 ring-line">
+              <li key={s.title} className="scroll-rise rounded-2xl bg-surface p-6 ring-1 ring-line" style={{ animationRangeStart: `entry ${5 + i * 8}%` }}>
                 <span className="text-sm font-bold tabular-nums text-muted">{i + 1}</span>
                 <h3 className="mt-6 text-lg font-bold leading-snug">{s.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-muted">{s.text}</p>
@@ -139,7 +152,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
         {/* Contacto */}
         <section id="contacto" className="scroll-mt-16 px-5 pt-24">
-          <div className="mx-auto max-w-6xl rounded-[28px] bg-ink px-6 py-14 text-white md:px-14 md:py-20">
+          <Spotlight className="mx-auto max-w-6xl rounded-[28px] bg-ink px-6 py-14 text-white md:px-14 md:py-20">
             <h2 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">{t.contact.title}</h2>
             <p className="mt-5 max-w-lg text-lg text-white/70">{t.contact.text}</p>
             <a href={`mailto:${EMAIL}`} className="mt-10 block break-all text-2xl font-bold underline decoration-white/30 underline-offset-[6px] hover:decoration-white md:text-4xl">
@@ -150,7 +163,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               <CopyEmail email={EMAIL} label={t.contact.copy} done={t.contact.copied} />
               <a href={GITHUB} target="_blank" rel="noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full border border-white/25 px-6 font-semibold hover:border-white/60"><Code2 className="size-4" />GitHub</a>
             </div>
-          </div>
+          </Spotlight>
         </section>
       </main>
 
@@ -164,10 +177,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
 function ProjectSection({ p, t, flip }: { p: Project; t: (typeof DICTS)["es"]["work"]; flip: boolean }) {
   return (
-    <article id={p.slug} aria-labelledby={`${p.slug}-title`} className="scroll-mt-16 py-16 md:py-24" style={{ background: p.color.soft, color: p.color.ink }}>
+    <article id={p.slug} aria-labelledby={`${p.slug}-title`} data-tint={p.color.soft} className="scroll-mt-16 py-16 md:py-24" style={{ color: p.color.ink }}>
       <div className="mx-auto max-w-6xl px-5">
         <div className={`grid items-start gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-14 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
-          <Gallery images={p.images} accent={p.color.base} />
+          <div className="scroll-shot"><Gallery images={p.images} accent={p.color.base} /></div>
 
           <div>
             <p className="text-sm font-semibold" style={{ color: p.color.base }}>{p.kind}</p>
@@ -179,7 +192,7 @@ function ProjectSection({ p, t, flip }: { p: Project; t: (typeof DICTS)["es"]["w
                 <div key={s.label} className="rounded-xl bg-white/70 p-3">
                   <dt className="sr-only">{s.label}</dt>
                   <dd>
-                    <span className="block text-2xl font-bold tabular-nums tracking-tight">{s.value}</span>
+                    <span className="block text-2xl font-bold tabular-nums tracking-tight"><CountUp value={s.value} /></span>
                     <span className="mt-0.5 block text-xs leading-snug opacity-75">{s.label}</span>
                   </dd>
                 </div>
@@ -198,11 +211,11 @@ function ProjectSection({ p, t, flip }: { p: Project; t: (typeof DICTS)["es"]["w
         </div>
 
         <div className="mt-14 grid gap-10 md:grid-cols-3">
-          <div>
+          <div className="scroll-rise">
             <h4 className="font-bold">{t.problem}</h4>
             <p className="mt-2 leading-relaxed opacity-85">{p.problem}</p>
           </div>
-          <div>
+          <div className="scroll-rise" style={{ animationRangeStart: "entry 12%" }}>
             <h4 className="font-bold">{t.built}</h4>
             <ul className="mt-2 space-y-2">
               {p.built.map(b => (
@@ -212,7 +225,7 @@ function ProjectSection({ p, t, flip }: { p: Project; t: (typeof DICTS)["es"]["w
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl bg-white/75 p-6">
+          <div className="scroll-rise rounded-2xl bg-white/75 p-6" style={{ animationRangeStart: "entry 19%" }}>
             <h4 className="font-bold">{t.detail}: {p.detail.title}</h4>
             <p className="mt-2 leading-relaxed opacity-85">{p.detail.text}</p>
             <p className="mt-5 text-sm font-semibold">{t.stack}</p>

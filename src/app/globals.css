@@ -26,7 +26,6 @@ html { scroll-behavior: smooth; }
 }
 
 body {
-  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -36,3 +35,51 @@ body {
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
 
 @keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+
+/* ── Animaciones ─────────────────────────────────────────────── */
+
+/* Fondo de la página: cambia al color de cada proyecto mientras se recorre */
+body { background: var(--page-bg, var(--paper)); transition: background-color .8s cubic-bezier(.4, 0, .2, 1); }
+.page-tint-header { background: color-mix(in srgb, var(--page-bg, var(--paper)) 82%, transparent); transition: background-color .8s cubic-bezier(.4, 0, .2, 1); }
+
+/* Entrada del título: palabra por palabra, de desenfocado a nítido */
+@keyframes word-in {
+  from { opacity: 0; filter: blur(10px); transform: translateY(.35em); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+.word { display: inline-block; animation: word-in .7s cubic-bezier(.2, .7, .2, 1) both; }
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.after-title { animation: fade-up .7s cubic-bezier(.2, .7, .2, 1) both; }
+
+/* Animaciones ligadas al scroll (nativas del navegador, sin JavaScript).
+   Donde no hay soporte, el contenido simplemente se ve sin animar. */
+@supports (animation-timeline: view()) {
+  @keyframes shot-in {
+    from { opacity: .35; transform: perspective(1400px) rotateX(9deg) scale(.92); }
+    to { opacity: 1; transform: none; }
+  }
+  .scroll-shot { animation: shot-in linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; transform-origin: 50% 100%; }
+
+  @keyframes rise-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  .scroll-rise { animation: rise-in linear both; animation-timeline: view(); animation-range: entry 5% cover 25%; }
+
+  /* Barra de progreso de lectura bajo el encabezado */
+  @keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .read-progress { animation: grow-x linear both; animation-timeline: scroll(root); transform-origin: 0 50%; }
+}
+
+/* Luz que sigue al cursor en el bloque de contacto */
+.spotlight { position: relative; isolation: isolate; overflow: hidden; }
+.spotlight::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(110, 140, 255, .22), transparent 60%);
+}
+.spotlight:hover::before { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .word, .after-title { animation: none; }
+  .scroll-shot, .scroll-rise, .read-progress { animation: none; }
+  .read-progress { display: none; }
+  .spotlight::before { display: none; }
+}
